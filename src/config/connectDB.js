@@ -5,4 +5,19 @@ const sequelize = new Sequelize('ecommerce_node', 'root', 'root', {
     dialect: 'mysql',
     logging: false
 });
-module.exports= sequelize;
+const authen = async()=>{
+    sequelize.authenticate().then(()=>{
+        console.log("connect database success");
+    }).catch((error)=>{
+        console.log("connect database fail :"+error);
+    })
+}
+const CreateTable = async () =>{
+    await sequelize.sync({alter: true}).then(()=>{
+        console.log("Create table success");
+    })
+}
+module.exports= {
+    sequelize,
+    authen,CreateTable
+};
