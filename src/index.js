@@ -1,18 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
+import bodyParser from "body-parser";
 import  sequelize  from "./config/connectDB";
-import User from "./models/User";
+import productRouter from "./routes/product.route"
+import User from "./models/user"
 require('dotenv').config();
-import Category  from "./models/category";
-import Product from "./models/product";
 const app = express();
 app.use(morgan('combined'));
-app.use(express.urlencoded());
-app.use(express.json());
-
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.text())
 sequelize.authen()
 sequelize.CreateTable()
 
+productRouter(app)
 let port = process.env.PORT || 8081;
 
 app.listen(port, () => {
