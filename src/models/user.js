@@ -1,32 +1,38 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/connectDB").sequelize;
+import Auth  from "../models/auth"
+const User = sequelize.define(
+    "User",
+    {
+        // Model attributes are defined here
+        id: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        firstName:{type: DataTypes.STRING, allowNull:false},
+        lastName: {type: DataTypes.STRING, allowNull:false},
+        email: {type: DataTypes.STRING, allowNull:false},
+        phone: {type: DataTypes.STRING, allowNull:false},   
+        userName: {type: DataTypes.STRING, allowNull:false},   
+        password: {type: DataTypes.STRING, allowNull:false},   
+        active: {type: DataTypes.BOOLEAN, allowNull:true},   
+        active_key: {type: DataTypes.STRING(10), allowNull:true},   
+        reset_key:{type: DataTypes.STRING(10), allowNull:true},   
+        auth_id: {type:DataTypes.BIGINT, allowNull:false,
+          references:{
+            model : Auth,
+            key: "id"
+        }
+      },   
+    },
+    {
+        freezeTableName: true,
+        tableName: "users",
+        createdAt: "createTimestamp",
+        updatedAt: "updateTimestamp",
     }
-  }
-  User.init({
-    firstName:{type: DataTypes.STRING, allowNull:false},
-    lastName: {type: DataTypes.STRING, allowNull:false},
-    email: {type: DataTypes.STRING, allowNull:false},
-    phone: {type: DataTypes.STRING, allowNull:false},   
-    userName: {type: DataTypes.STRING, allowNull:false},   
-    password: {type: DataTypes.STRING, allowNull:false},   
-    active: {type: DataTypes.BOOLEAN, allowNull:true},   
-    active_key: {type: DataTypes.STRING(10), allowNull:true},   
-    reset_key:{type: DataTypes.STRING(10), allowNull:true},   
-    auth_id: {type:DataTypes.BIGINT, allowNull:false},   
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
+);
+
+module.exports = User;
