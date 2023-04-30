@@ -15,9 +15,25 @@ const Product = sequelize.define(
         NameProduct: DataTypes.STRING,
         title: DataTypes.STRING,
         description: DataTypes.STRING,
-        price: DataTypes.INTEGER,
-        discount: DataTypes.INTEGER,
-        amount: DataTypes.INTEGER,
+        price:{
+            type:DataTypes.INTEGER,
+            validate:{
+                min: 1
+            }
+        },
+        discount: {
+            type:DataTypes.INTEGER,
+            validate:{
+                min: 0,
+                max:100
+            }
+        },
+        amount:{
+            type:DataTypes.INTEGER,
+            validate:{
+                min: 0
+            }
+        },
         colorId:{
             type: DataTypes.BIGINT,
             references:{
