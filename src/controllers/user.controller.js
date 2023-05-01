@@ -9,6 +9,10 @@ const getALlUser = async (req,res) =>{
     const user = await userSevice.getALlUser();
     return res.status(200).json(user)
 }
+const BlockUser = async (req,res) =>{
+    const user = await userSevice.BlockUser(req.params.idUser);
+    return res.status(200).json(user)
+}
 module.exports = {
-    signUp,getALlUser
+    signUp,getALlUser,BlockUser
 }

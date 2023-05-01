@@ -57,6 +57,28 @@ const getALlUser = async () =>{
         }
     }
 }
+const BlockUser = async (idUser)=>{
+    try {
+        const User = await Users.findByPk(idUser);
+        if(User){
+            const myUser= await User.update({active: false});
+            return {
+                data: myUser,
+                Message: "OK"
+            }
+        }
+        else {
+            return {
+                Message: "user not fond!!"
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        return{
+            Message: "error"
+        }
+    }
+}
 module.exports = {
-    SighUp,getALlUser
+    SighUp,getALlUser,BlockUser
 }

@@ -12,6 +12,7 @@ let WebRouter = (app) => {
     router.post("/sign-up",userController.signUp)
     app.use("/api",router);
     router.route("/user").get(userController.getALlUser)
+    router.put("/user/:idUser=?",userController.BlockUser)
 };
 
 module.exports = WebRouter;
