@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/connectDB");
 const Product = require("./product");
 const Cart = require("./cart")
-const CartProduct = sequelize.define("CartProduct",{
+const DetailProduct = sequelize.define("DetailProduct",{
     id:{
         type: DataTypes.BIGINT,
         primaryKey:true,
@@ -32,9 +32,10 @@ const CartProduct = sequelize.define("CartProduct",{
         }
     }
 },{
-    tableName: "cartProduct",
+    tableName: "detailProducts",
     freezeTableName:true,
     createdAt: "createTimestamp",
     updatedAt: "updateTimestamp"
 })
-module.exports = CartProduct
+DetailProduct.sync()
+module.exports = DetailProduct

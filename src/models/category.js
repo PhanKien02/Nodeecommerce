@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+const Product = require("./product");
 const sequelize = require("../config/connectDB").sequelize;
 
 const Category = sequelize.define("Category", {
@@ -14,7 +15,7 @@ const Category = sequelize.define("Category", {
     }
 },{
     freezeTableName: true,
-    tableName : "categorys",
+    tableName : "categories",
 })
-
+Category.sync();
 module.exports = Category

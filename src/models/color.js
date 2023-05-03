@@ -17,5 +17,5 @@ const Color = sequelize.define("Color",{
     tableName:"color",
     freezeTableName: true
 })
-
+Color.sync()
 module.exports = Color

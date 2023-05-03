@@ -20,4 +20,5 @@ const Auth = sequelize.define("Auth",{
         tableName: "auth",
     }
 )
+Auth.sync()
 module.exports = Auth
