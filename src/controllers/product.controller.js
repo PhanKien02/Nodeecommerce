@@ -15,8 +15,8 @@ const createProduct = async (req,res) =>{
 }
 const deleteProduct = async (req,res) =>{
    console.log(req);
-   const msg=  ProductService.deleteProduct(req.params.idProduct).then(()=>{
-      return res.status(200).json("delete product success")
+   const product=  ProductService.deleteProduct(req.params.idProduct).then(()=>{
+      return res.status(200).json(product)
    });
 }
 module.exports = {
