@@ -8,19 +8,17 @@ const Cart = sequelize.define("Cart",{
         primaryKey: true,
         allowNull: false
     },
-    userId:{
-        type: DataTypes.BIGINT,
-        allowNull:false,
-        references:{
-            model : User,
-            key: "id"
-        }
-    }
 },{
     tableName: "cart",
     freezeTableName:true,
     createdAt: "createTimestamp",
     updatedAt: "updateTimestamp",
-})
-
+});
+User.hasOne(Cart,{
+    foreignKey: "userId",
+    as: "users",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT"
+    });
+Cart.sync();
 module.exports=  Cart

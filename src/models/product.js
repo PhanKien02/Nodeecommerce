@@ -34,20 +34,6 @@ const Product = sequelize.define(
                 min: 0
             }
         },
-        colorId:{
-            type: DataTypes.BIGINT,
-            references:{
-                model: Color,
-                key: "id"
-            }
-        },
-        categoryId: {
-            type: DataTypes.BIGINT,
-            references:{
-                model: Category,
-                key : "id"
-            }
-        },
         images: DataTypes.STRING,
     },
     {
@@ -57,5 +43,18 @@ const Product = sequelize.define(
         updatedAt: "updateTimestamp",
     }
 );
-
+Product.belongsTo(Color, {
+    foreignKey: "colorId",
+    as: "Color",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT"
+});
+Product.belongsTo(Category,{
+    foreignKey: "categoryId",
+    as: "Category",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT"
+})
+Product.sync()
 module.exports = Product;
+

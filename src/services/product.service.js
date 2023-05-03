@@ -1,10 +1,8 @@
-const { where } = require("sequelize");
 const Product = require("../models/product");
 const Category = require("../models/category");
 const Color = require("../models/color");
 const getALlProduct = async () => {
     try {
-        products = await Product.addColor()
         const products = await Product.findAll({
             include: [
                 {
@@ -13,7 +11,7 @@ const getALlProduct = async () => {
                 },
                 {
                     model: Color,
-                    as: "Colors",
+                    as: "Color",
                 }
             ],
         });
@@ -23,9 +21,10 @@ const getALlProduct = async () => {
         };
     } catch (error) {
         console.log(error);
-        return {
-            Message: "error",
-        };
+        return  {
+            Error : error,
+            Message: "Error"
+        }
     }
 };
 const findProductById = async (idProduct) => {
@@ -44,10 +43,11 @@ const findProductById = async (idProduct) => {
             data: product,
             Message: "OK",
         };
-    } catch (error) {
+    } 
+    catch (error) {
         return {
-            error: error,
-            Message: "error",
+            Error: error,
+            Message: "Error",
         };
     }
 };
@@ -61,9 +61,9 @@ const createProduct = async (Inputdata) => {
             discount: Inputdata.discount,
             amount: Inputdata.amount,
             categoryId: Inputdata.categoryId,
+            colorId: Inputdata.colorId,
             images: Inputdata.images,
         });
-        color = await Color.create({id: "id"})
         return {
             data: product,
             Message: "OK",

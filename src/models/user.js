@@ -30,14 +30,6 @@ const Users = sequelize.define(
         active: { type: DataTypes.BOOLEAN, allowNull: true },
         active_key: { type: DataTypes.STRING, allowNull: true },
         reset_key: { type: DataTypes.STRING, allowNull: true },
-        auth_id: {
-            type: DataTypes.BIGINT,
-            allowNull: false,
-            references: {
-                model: Auth,
-                key: "id",
-            },
-        },
     },
     {
         freezeTableName: true,
@@ -46,5 +38,11 @@ const Users = sequelize.define(
         updatedAt: "updateTimestamp",
     }
 );
-
+Users.belongsTo(Auth,{
+    foreignKey: "auth_id",
+    as: "Auth",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT"
+});
+Users.sync()
 module.exports = Users;
