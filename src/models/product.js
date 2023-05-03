@@ -43,7 +43,12 @@ const Product = sequelize.define(
         updatedAt: "updateTimestamp",
     }
 );
-Product.belongsToMany(Color, {through: "colorProduct"});
+Product.belongsTo(Color, {
+    foreignKey: "colorId",
+    as: "Color",
+    onDelete: "RESTRICT",
+    onUpdate: "RESTRICT"
+});
 Product.belongsTo(Category,{
     foreignKey: "categoryId",
     as: "Category",
