@@ -1,5 +1,8 @@
 import bcryptjs from "bcryptjs";
+import Auth from "../models/auth";
+import Cart from "../models/cart";
 const Users = require("../models/User");
+const {createCart} = require("./cart.service")
 const hashPassword = async (password) => {
     try {
         const salt = bcryptjs.genSaltSync(10);
@@ -23,34 +26,51 @@ const checkUser = (myemail) => {
 };
 const SighUp = async (Inputdata) => {
     const check = await checkUser(Inputdata.email);
-    if (check) {
-        return {
-            errMessage: "Your email is already in used, Plz try another email",
-        };
-    } else {
-        const password = await hashPassword(Inputdata.password);
-        const newUser = await Users.create({
-            email: Inputdata.email,
-            userName: Inputdata.userName,
-            password: password,
-            active: true,
-            auth_id: Inputdata.auth_id,
-        });
-        return{
-            data: newUser,
-            Message: "OK"
+    try {
+        if (check) {
+            return {
+                errMessage: "Your email is already in used, Plz try another email",
+            };
+        } else {
+            const password = await hashPassword(Inputdata.password);
+            const newUser = await Users.create({
+                email: Inputdata.email,
+                userName: Inputdata.userName,
+                password: password,
+                active: true,
+                auth_id: Inputdata.auth_id,
+            });
+            if(newUser.auth_id === 1){
+                var newCart= await createCart(newUser.id)
+            }
+            return{
+                data: {
+                    newUser : newUser,
+                    newCart : newCart
+                },
+                Message: "OK"
+            }
         }
+    } catch (error) {
+        console.log(error);
     }
 };
 
 const getALlUser = async () =>{
     try {
-        const users = await Users.findAll()
+        const users = await Users.findAll({include:[
+            {
+                model: Auth,
+                as: "Auth"
+            }
+        ]
+    })
         return {
             data: users,
             Message: "OK"
         }
     } catch (error) {
+        console.log(error);
         return {
             error: error,
             Message : "error"
