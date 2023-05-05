@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import Auth from "../models/auth";
-import Cart from "../models/cart";
+import jwt from "jsonwebtoken";
 const Users = require("../models/User");
 const {createCart} = require("./cart.service")
 const hashPassword = async (password) => {
@@ -43,10 +43,12 @@ const SighUp = async (Inputdata) => {
             if(newUser.auth_id === 1){
                 var newCart= await createCart(newUser.id)
             }
+            const token = await jwt.sign({id: newUser.id,role:newUser.getAuth()},process.env.SECRET_KEY)
             return{
                 data: {
                     newUser : newUser,
-                    newCart : newCart
+                    newCart : newCart,
+                    token : token
                 },
                 Message: "OK"
             }

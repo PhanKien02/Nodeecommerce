@@ -3,7 +3,7 @@ import userSevice from "../services/user.service"
 const signUp = async (req,res)=>{
     console.log(req.body);
     const User = await userSevice.SighUp(req.body);
-    return res.status(200).json(User)
+    return res.status(200).json(User).cookie({"token":User.token})
 }
 const getALlUser = async (req,res) =>{
     const user = await userSevice.getALlUser();
