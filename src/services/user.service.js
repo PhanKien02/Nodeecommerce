@@ -1,6 +1,5 @@
 import bcryptjs from "bcryptjs";
 import Auth from "../models/auth";
-import Cart from "../models/cart";
 const Users = require("../models/User");
 const {createCart} = require("./cart.service")
 const hashPassword = async (password) => {
@@ -34,7 +33,7 @@ const SighUp = async (Inputdata) => {
         } else {
             const password = await hashPassword(Inputdata.password);
             const newUser = await Users.create({
-                email: Inputdata.email,
+                phone: Inputdata.phone,
                 userName: Inputdata.userName,
                 password: password,
                 active: true,
@@ -53,9 +52,22 @@ const SighUp = async (Inputdata) => {
         }
     } catch (error) {
         console.log(error);
+        return {
+            Error: error,
+            Message: "Error"
+        }
     }
 };
-
+const sign_in = async (users)=>{
+    const checkUser = await Users.findOne({where:{phone : users.phone}});
+    if(checkUser){
+        const userLogin= await Users.findOne({
+            attributes:["phone","password"],
+            where:{phone :users.phone},
+            raw: true,
+        })
+    }
+}
 const getALlUser = async () =>{
     try {
         const users = await Users.findAll({include:[
