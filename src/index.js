@@ -17,7 +17,7 @@ app.use(fileUpload({
 }));
 sequelize.authen()
 sequelize.CreateTable()
-app.use('/images', express.static('./src/image/'));
+app.use('/images', express.static('./src/public/images/'));
 webRouter(app)
 let port = process.env.PORT || 8081;
 

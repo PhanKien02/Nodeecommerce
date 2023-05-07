@@ -4,8 +4,7 @@ const uploadFile = (fileUpload) =>{
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     const myFile = `${Buffer.from(fileUpload.name).toString('base64')}${path.extname(fileUpload.name)}`;
-    console.log("myFile",myFile);
-    uploadPath = "./src/image/" + myFile;
+    uploadPath = "./src/public/images/" + myFile;
 
     // Use the mv() method to place the file somewhere on your server
     try {
